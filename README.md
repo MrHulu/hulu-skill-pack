@@ -2,6 +2,8 @@
 
 中文 | [English](README.en.md)
 
+<img src="assets/hulu-skill-pack-cover.png" width="240" alt="Hulu Skill Pack 封面">
+
 一组面向 AI 编程助手的个人原创 Skill 封装。每个 Skill 都是可独立使用的
 公开起点：保留必要的能力和清晰的使用边界，方便直接阅读、安装和二次创作。
 

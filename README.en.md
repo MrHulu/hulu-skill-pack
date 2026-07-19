@@ -2,6 +2,8 @@
 
 [中文](README.md) | English
 
+<img src="assets/hulu-skill-pack-cover.png" width="240" alt="Hulu Skill Pack cover">
+
 A personal collection of original skill packages for AI coding agents. Each
 skill is a self-contained public starting point: it preserves the essential
 capability and states its boundaries clearly, so it can be read, installed,
