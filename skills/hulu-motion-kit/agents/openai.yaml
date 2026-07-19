@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hulu Motion Kit"
+  short_description: "Create a practical Hyperframes-based video foundation with narration and hard subtitles"
+  default_prompt: "Use $hulu-motion-kit to initialize an editable video project or render it with a basic synthetic voice and burned-in subtitles."

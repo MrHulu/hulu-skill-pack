@@ -1,17 +1,17 @@
 ---
-name: hyperframes-video-starter
+name: hulu-motion-kit
 description: >-
-  Creates a generic Hyperframes video project and optionally adds synthetic
-  narration with burned-in subtitles. Use when the user wants a simple,
-  editable HTML-video draft or a Hyperframes starter, not a directed or
+  Creates an editable video project through the Hulu Motion Kit workflow, with
+  optional synthetic narration and burned-in subtitles. Use when the user wants
+  a practical Hyperframes-based video foundation, not a fully directed or
   publish-ready production workflow.
 ---
 
-# Hyperframes Video Starter
+# Hulu Motion Kit
 
-Use this as a normal open-source baseline for a lightweight video draft.
-It calls the public Hyperframes CLI directly and adds only basic narration and
-hard subtitles.
+Hulu Motion Kit is an original public workflow package for a practical,
+editable video foundation. It uses the public Hyperframes CLI for HTML-video
+rendering and adds a basic narration/subtitle handoff.
 
 ## Start a project
 
@@ -35,7 +35,7 @@ Requirements: Node.js with `npx`, FFmpeg, and `edge-tts`
 
 ## Boundary
 
-This starter does not provide story planning, content research, branding,
+This package does not provide story planning, content research, branding,
 professional sound design, quality gates, review, or delivery workflow.
 
 ## Sources

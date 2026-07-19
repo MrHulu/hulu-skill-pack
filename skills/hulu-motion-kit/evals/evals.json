@@ -1,9 +1,9 @@
 {
-  "skill_name": "hyperframes-video-starter",
+  "skill_name": "hulu-motion-kit",
   "evals": [
     {
       "id": 1,
-      "prompt": "Create a generic Hyperframes project and add basic Chinese narration with hard subtitles.",
+      "prompt": "Use Hulu Motion Kit to create an editable video project and add basic Chinese narration with hard subtitles.",
       "expected_output": "Uses the pinned public Hyperframes CLI, retains basic narration and subtitles, and does not claim publish-ready quality.",
       "files": []
     }

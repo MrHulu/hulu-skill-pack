@@ -1,4 +1,0 @@
-interface:
-  display_name: "Hyperframes Video Starter"
-  short_description: "Create a basic Hyperframes draft with narration and hard subtitles"
-  default_prompt: "Use $hyperframes-video-starter to initialize a generic Hyperframes video project or render it with a basic synthetic voice and burned-in subtitles."

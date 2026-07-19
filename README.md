@@ -1,33 +1,34 @@
-# Hulu Lite Skills
+# Hulu Skill Pack
 
-Small, public starter skills for things that are useful to share but do not
-need a full production workflow.
+中文 | [English](README.en.md)
 
-Each skill is self-contained under `skills/<skill-name>/`. Read that skill's
-`SKILL.md` before use.
+一组面向 AI 编程助手的个人原创 Skill 封装。每个 Skill 都是可独立使用的
+公开起点：保留必要的能力和清晰的使用边界，方便直接阅读、安装和二次创作。
 
-## Included skills
+所有 Skill 位于 `skills/<skill-name>/`，使用前请先阅读对应的 `SKILL.md`。
 
-| Skill | What it gives you |
+## 当前 Skill
+
+| Skill | 说明 |
 | --- | --- |
-| [Hyperframes Video Starter](skills/hyperframes-video-starter/) | A generic Hyperframes project initializer plus basic synthetic narration and hard subtitles. |
+| [Hulu Motion Kit](skills/hulu-motion-kit/) | 基于 Hyperframes 的视频创作封装，提供项目初始化、基础配音与硬字幕。 |
 
-## Install / use
+## 使用方式
 
 ```bash
-git clone https://github.com/MrHulu/hulu-lite-skills.git
+git clone https://github.com/MrHulu/hulu-skill-pack.git
 ```
 
-Then open the desired `SKILL.md` in your coding agent or copy the skill folder
-into the agent's skill directory.
+打开目标 Skill 的 `SKILL.md`，或将整个 Skill 文件夹复制到你的 AI 编程助手
+Skill 目录中即可使用。
 
-## Scope
+## 设计原则
 
-These are intentionally small, openly shareable starting points. They are not
-complete production systems, private operating procedures, or a promise that a
-result is ready to publish.
+- 每个包独立、清楚、可验证。
+- 对第三方能力保持透明标注；封装与工作流本身由本仓库维护。
+- 公开内容适合作为可靠起点；复杂项目仍应依据自己的目标完成创作、审阅和交付。
 
-## Contributing
+## 贡献
 
-Keep additions self-contained, useful on their own, and safe to publish. See
-[CONTRIBUTING.md](CONTRIBUTING.md).
+欢迎提交同样独立、清晰且适合公开发布的 Skill。详见
+[CONTRIBUTING.md](CONTRIBUTING.md)。

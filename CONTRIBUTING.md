@@ -1,6 +1,6 @@
 # Contributing
 
-Contributions should be simple, self-contained skills that are safe to share
+Contributions should be self-contained skill packages that are safe to share
 publicly.
 
 Before opening a pull request:

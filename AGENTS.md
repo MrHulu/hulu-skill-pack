@@ -1,6 +1,6 @@
-# Hulu Lite Skills
+# Hulu Skill Pack
 
-This repository is a public collection of standalone starter skills.
+This repository is a public collection of standalone personal skill packages.
 
 - Each skill lives in `skills/<lowercase-hyphenated-name>/`.
 - `SKILL.md` is the canonical instruction file.
