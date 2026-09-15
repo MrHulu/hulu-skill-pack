@@ -1,0 +1,176 @@
+{
+  "schema": "hulu-skill-requirements/v1",
+  "skill": "hulu-kdocs-kit",
+  "summary": "Everything this skill needs before it can do anything. Read by both `kdocs_kit.py doctor` (report) and `kdocs_kit.py setup` (install). Single source of truth -- the two commands cannot drift apart, and tests enforce that.",
+  "pins": {
+    "kdocs_cli_version": "2.5.29",
+    "official_skill_repo": "kdocs-app/kdocs-skill",
+    "official_skill_ref": "8c34e184d81defea0b748f5731d0b4661295733a",
+    "checksums_url": "https://wpsai.wpscdn.cn/skillhub/pro/v{kdocs_cli_version}/releases/checksums.txt"
+  },
+  "requirements": [
+    {
+      "id": "python",
+      "title": "Python 3.7+",
+      "kind": "runtime",
+      "level": "required",
+      "why": "This skill is a single Python script. It uses the standard library only -- there are no pip packages to install, which is why there is no requirements.txt.",
+      "check": {
+        "type": "python_version",
+        "min": [
+          3,
+          7
+        ]
+      },
+      "install": {
+        "auto": false,
+        "reason": "Installing a language runtime is the user's call, not a skill's.",
+        "manual": {
+          "all": "Install from https://www.python.org/downloads/",
+          "windows": "Tick 'Add python.exe to PATH' during install. python.org builds provide `python`, not `python3` -- use `python` or `py -3`.",
+          "macos": "Preinstalled, or `brew install python`",
+          "linux": "e.g. `sudo apt install python3`"
+        }
+      }
+    },
+    {
+      "id": "kdocs-cli",
+      "title": "kdocs-cli (official WPS binary)",
+      "kind": "binary",
+      "level": "required",
+      "why": "Every action is executed by the official CLI. This skill never talks to the WPS API directly -- it only wraps the CLI.",
+      "check": {
+        "type": "binary"
+      },
+      "install": {
+        "auto": true,
+        "method": "upstream-script",
+        "source": "https://raw.githubusercontent.com/{official_skill_repo}/{official_skill_ref}/scripts/setup.sh",
+        "source_windows": "https://raw.githubusercontent.com/{official_skill_repo}/{official_skill_ref}/scripts/setup.ps1",
+        "env": {
+          "KDOCS_CLI_VERSION": "{kdocs_cli_version}"
+        },
+        "note": "We fetch and run WPS's own installer rather than reimplementing it. It resolves your OS/arch, downloads from the official CDN, and verifies SHA-256 against checksums.txt. We do not redistribute the binary. The installer script itself is pinned by commit and checked against the SHA-256 below before it runs.",
+        "manual": {
+          "all": "Install the official kdocs skill from https://www.kdocs.cn/latest (avatar menu -> 金山文档Skill), which ships the same installer."
+        },
+        "verify": {
+          "sha256": "b88c259a6a6bd2df42a80684289830fa732f43ea6d51c0d3502b467554ce3abc",
+          "sha256_windows": "62baa228e47b65f79bf41295576eadfa172be8f8433adf75d8c9d65104ff3b4b",
+          "note": "We execute this script, so we verify it before running. Pinned to a commit, not a branch: a moving ref means the bytes we execute could change under us. Bump both the ref and these hashes together, deliberately."
+        }
+      }
+    },
+    {
+      "id": "official-skill",
+      "title": "Official `kdocs` skill (reference docs for raw passthrough)",
+      "kind": "skill",
+      "level": "optional",
+      "why": "This wrapper covers ~10 everyday commands. The other ~200 official actions are reached through `raw`, and their parameter docs live in the official skill's references/. Without it, `raw` still runs but you have to know the parameters yourself. Missing it does not break anything this skill wraps -- it only means you supply raw parameters yourself.",
+      "check": {
+        "type": "sibling_skill",
+        "name": "kdocs",
+        "probe": "references/sheet.md"
+      },
+      "install": {
+        "auto": false,
+        "redistributable": false,
+        "reason": "The upstream repo declares no license (no LICENSE file, GitHub reports license: null), so its files cannot be bundled or redistributed here. Install it yourself from the copyright holder.",
+        "manual": {
+          "all": "Open https://www.kdocs.cn/latest -> avatar menu -> 金山文档Skill, or fetch https://github.com/kdocs-app/kdocs-skill into `.claude/skills/kdocs/`."
+        }
+      }
+    },
+    {
+      "id": "network",
+      "kind": "network",
+      "title": "Network access to WPS",
+      "level": "required",
+      "why": "All document operations are cloud calls. A corporate proxy that blocks wps.cn will make every command fail in a way that looks like a bug in this skill.",
+      "check": {
+        "type": "reachable",
+        "hosts": [
+          "https://api.wps.cn/",
+          "https://www.kdocs.cn/"
+        ]
+      },
+      "install": {
+        "auto": false,
+        "reason": "Network policy is not something a skill should change.",
+        "manual": {
+          "all": "Allow api.wps.cn and www.kdocs.cn through your proxy/firewall."
+        }
+      }
+    },
+    {
+      "id": "claude-code",
+      "title": "Claude Code 2.1.129+",
+      "kind": "platform",
+      "level": "recommended",
+      "why": "`skillOverrides` only takes effect from this version. On older versions the official kdocs skill wins trigger matches and this wrapper's guardrails are bypassed.",
+      "check": {
+        "type": "command_version",
+        "command": "claude",
+        "min": [
+          2,
+          1,
+          129
+        ]
+      },
+      "install": {
+        "auto": false,
+        "reason": "Upgrading the host agent is the user's call.",
+        "manual": {
+          "all": "npm install -g @anthropic-ai/claude-code@latest"
+        }
+      }
+    },
+    {
+      "id": "skill-override",
+      "title": "skillOverrides entry for the official skill",
+      "kind": "config",
+      "level": "recommended",
+      "applies_when": "official-skill",
+      "why": "Both skills answer to the same words. Without this, the official one can take the turn and none of this wrapper's guardrails (no-overwrite, download verification, scope prompts) apply.",
+      "check": {
+        "type": "skill_override",
+        "key": "kdocs",
+        "accept": [
+          "user-invocable-only",
+          "off"
+        ]
+      },
+      "install": {
+        "auto": true,
+        "method": "merge-settings",
+        "target": ".claude/settings.json",
+        "patch": {
+          "skillOverrides": {
+            "kdocs": "user-invocable-only"
+          }
+        },
+        "note": "Merged into your existing settings; other keys are preserved. The official skill stays usable by hand as /kdocs.",
+        "manual": {
+          "all": "Add \"skillOverrides\": { \"kdocs\": \"user-invocable-only\" } to .claude/settings.json"
+        }
+      }
+    },
+    {
+      "id": "account",
+      "title": "A personal WPS account (not an enterprise one)",
+      "kind": "account",
+      "level": "required",
+      "why": "The Skill Hub token exchange is gated to personal accounts server-side. Enterprise accounts get HTTP 403 (code 403001) on every call, and no client-side change can work around it.",
+      "check": {
+        "type": "auth"
+      },
+      "install": {
+        "auto": false,
+        "reason": "Only a human can log in.",
+        "manual": {
+          "all": "Run `python scripts/kdocs_kit.py login` and approve in the browser, or paste a token from https://www.kdocs.cn/latest with `kdocs_kit.py set-token`."
+        }
+      }
+    }
+  ]
+}
